@@ -1,7 +1,5 @@
 import rdkit.Chem as Chem
 
-
-
 ### 1: Creating Mol Objects ###
 print("\n----- Creating Mol Objects -----", end="\n\n")
 
@@ -24,8 +22,6 @@ mol3 = Chem.AddHs(mol)
 print("Number of atoms with Hs:", mol3.GetNumAtoms(), end="\n\n")
 
 print("Adenine mol with Hs:", Chem.MolToMolBlock(mol3), end="\n\n")
-
-
 
 ### 2: Describing Mol Objects ###
 import rdkit.Chem.rdMolDescriptors as Desc
@@ -66,8 +62,6 @@ print("Bond between atom & neighbor 0:",
 #Ring information
 print("Number of rings:", mol3.GetRingInfo().NumRings())
 
-
-
 ### 3. Substructure Search
 print("\n----- Substructures -----", end="\n\n")
 
@@ -91,8 +85,6 @@ from rdkit.Chem import rdFMCS
 print("MCS between adenine & guanine:",
       rdFMCS.FindMCS([adenine_mol, guanine_mol]).smartsString)
 
-
-
 ### 4. Fingerprints & Similarity
 print("\n----- Fingerprints -----", end="\n\n")
 
@@ -115,8 +107,6 @@ from rdkit import DataStructs
 
 print("Tanimoto Similarity between Adenine & Guanine:",
       DataStructs.FingerprintSimilarity(adenine_fp, guanine_fp))
-
-
 """ 4.5: Coding challenge time!! 
 
 Find two molecules of your choice, and:
@@ -129,7 +119,58 @@ c) Find the Tanimoto Similarity between them
 #Code Goes here
 #####
 
-### 5. Chiral Embedding (over a subset of KEGG)
+### 5. Chiral Embedding (over LUCA compounds)
 
+print("\n----- Chiral Analysis -----", end="\n\n")
+
+#Read in LUCA compounds, find smiles strings associated with each compound
+import json
+import pandas as pd
+
+fpath = "Luca_ec_compound_unique_list_clean.json"
+with open(fpath) as f:
+    data = json.load(f)
+luca_cpds = data["Luca"]
+
+kegg_df = pd.read_csv("chiral_molweight_formula_labels.csv")
+luca_smiles = kegg_df[kegg_df["C"].isin(luca_cpds)]["S"].tolist()
+
+print("Subset of LUCA:", luca_smiles[0:10])
+
+from rdkit.Chem import AllChem
+import re
+from tqdm import tqdm
+
+luca_cpds_chiral = []
+print("\n--- Analyzing LUCA compounds ---")
+for cpd in tqdm(luca_smiles):
+    try:
+        #Find canonical smiles
+        m = Chem.MolFromSmiles(cpd)
+        Chem.SanitizeMol(m)  #Cleans 3D structures
+        m2 = Chem.AddHs(m)  #Should be added in order to form proper geometry
+        AllChem.EmbedMolecule(m2)  #Embeds molecule in 3D space
+        Chem.AssignAtomChiralTagsFromStructure(m2)  #Assigns chiral tags
+        chiral_smiles = Chem.MolToSmiles(
+            m2, isomericSmiles=True
+        )  #Ensures chiral tags are included in smiles output
+
+        #Replace @@ (L) for @
+        chiral_smiles = re.sub("@@", '@', chiral_smiles)
+
+        luca_cpds_chiral.append(chiral_smiles)
+    except:
+        pass
+
+print("\nChiral subset of LUCA:", luca_cpds_chiral[0:10], end="\n\n")
+
+#Get chiral percentage - this is the percentage of smiles strings with a '@'
+luca_chiral_count = 0
+for cpd in luca_cpds_chiral:
+    if "@" in cpd:
+        luca_chiral_count += 1
+
+print("LUCA chiral percentage:",
+      luca_chiral_count / float(len(luca_cpds_chiral)))
 
 ### 6. Drawing
