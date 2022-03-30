@@ -7,23 +7,28 @@ Basic RDKit tutorial, focusing on creating mol objects, converting from mol to s
 1. *Via pip (check system first!):* https://pypi.org/project/rdkit-pypi/
 2. *Via conda:* https://www.rdkit.org/docs/Install.html
 
-## Tutorial 1: creating & working with mol objects
+## 1: Creating Mol Objects
 
-- Pick a molecule (adenine?), have smiles & inchi ready to go
 - Create a mol object
-- Use *Descriptors* to give various properties 
-- Ring information
+- Inchi to smiles & back
 - Add/remove Hs
-- Substructure search (MCS with guanine?)
-- Fingerprints (Tanimoto similarity with guanine?)
 
-## Tutorial 2: converting mols to strings
+## 2: Describe Mol Objects
+- Use *Descriptors* to give various properties 
+- Identify specific atoms & bondds
 
-- inchi to smiles & back
-- chiral embedding & output
+## 3: Substructure Searche
+- Finding specific substructures
+- Maximal Common Substructure
 
-## Tutorial 3: Visualization
+## 4: Fingerprints
+- Building Fingerprints 
+- Finding Tanimoto similarity
 
+## 5: Chirality
+- Chiral embedding & output over KEGG
+
+## 6: Visualization
 - Basic drawing
 - Highlighting patterns
 - Mol to picture and back "metadata in molecule images"
