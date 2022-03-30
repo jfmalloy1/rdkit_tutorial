@@ -2,6 +2,9 @@
 
 Basic RDKit tutorial, focusing on creating mol objects, converting from mol to strings, and visualizing chemicals.
 
+[Official RDKit Tutorial](https://www.rdkit.org/docs/GettingStartedInPython.html)
+[
+
 ## RDKit Setup
 
 1. *Via pip (check system first!):* https://pypi.org/project/rdkit-pypi/
@@ -14,11 +17,11 @@ Basic RDKit tutorial, focusing on creating mol objects, converting from mol to s
 - Add/remove Hs
 
 ## 2: Describe Mol Objects
-- Use *Descriptors* to give various properties 
+- Use [Descriptors](https://www.rdkit.org/docs/source/rdkit.Chem.Descriptors.html) to give various properties 
 - Identify specific atoms & bondds
 
 ## 3: Substructure Searche
-- Finding specific substructures
+- Finding specific substructures using [SMARTS](https://www.ics.uci.edu/~dock/manuals/DaylightTheoryManual/theory.smarts.html)
 - Maximal Common Substructure
 
 ## 4: Fingerprints
