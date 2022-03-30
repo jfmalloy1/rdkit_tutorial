@@ -1,5 +1,7 @@
 import rdkit.Chem as Chem
 
+
+
 ### 1: Creating Mol Objects ###
 print("\n----- Creating Mol Objects -----", end="\n\n")
 
@@ -22,6 +24,8 @@ mol3 = Chem.AddHs(mol)
 print("Number of atoms with Hs:", mol3.GetNumAtoms(), end="\n\n")
 
 print("Adenine mol with Hs:", Chem.MolToMolBlock(mol3), end="\n\n")
+
+
 
 ### 2: Describing Mol Objects ###
 import rdkit.Chem.rdMolDescriptors as Desc
@@ -62,6 +66,8 @@ print("Bond between atom & neighbor 0:",
 #Ring information
 print("Number of rings:", mol3.GetRingInfo().NumRings())
 
+
+
 ### 3. Substructure Search
 print("\n----- Substructures -----", end="\n\n")
 
@@ -84,6 +90,8 @@ from rdkit.Chem import rdFMCS
 
 print("MCS between adenine & guanine:",
       rdFMCS.FindMCS([adenine_mol, guanine_mol]).smartsString)
+
+
 
 ### 4. Fingerprints & Similarity
 print("\n----- Fingerprints -----", end="\n\n")
