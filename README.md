@@ -3,7 +3,6 @@
 Basic RDKit tutorial, focusing on creating mol objects, converting from mol to strings, and visualizing chemicals.
 
 [Official RDKit Tutorial](https://www.rdkit.org/docs/GettingStartedInPython.html)
-[
 
 ## RDKit Setup
 
